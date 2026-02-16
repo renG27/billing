@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_billable_visit_tree" model="ir.ui.view">
+        <field name="name">billable.visit.tree</field>
+        <field name="model">billable.visit</field>
+        <field name="arch" type="xml">
+            <tree string="Log Tagihan Kunjungan" create="0" edit="0" 
+                  decoration-success="status == 'billable'" 
+                  decoration-warning="status == 'flagged'" 
+                  decoration-muted="status == 'non_billable'">
+                <field name="date"/>
+                <field name="name"/>
+                <field name="patient_id"/>
+                <field name="status" widget="badge"/>
+                <field name="flag_reason"/>
+                <field name="bill_amount" sum="Total Tagihan"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_billable_visit_search" model="ir.ui.view">
+        <field name="name">billable.visit.search</field>
+        <field name="model">billable.visit</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="patient_id"/>
+                <filter string="Bulan Ini" name="this_month" domain="[('date','&gt;=', context_today().strftime('%Y-%m-01'))]"/>
+                <filter string="Billable (Sah)" name="billable" domain="[('status','=','billable')]"/>
+                <filter string="Flagged (Masalah)" name="flagged" domain="[('status','=','flagged')]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Status" name="group_status" context="{'group_by': 'status'}"/>
+                    <filter string="Tanggal" name="group_date" context="{'group_by': 'date:day'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_billable_visit" model="ir.actions.act_window">
+        <field name="name">Log Tagihan Saya</field>
+        <field name="res_model">billable.visit</field>
+        <field name="view_mode">tree</field>
+        <field name="context">{'search_default_this_month': 1, 'search_default_billable': 1}</field>
+    </record>
+</odoo>

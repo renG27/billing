@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="ir_cron_billing_process" model="ir.cron">
+        <field name="name">Billing: Proses Kunjungan Hari Ini</field>
+        <field name="model_id" ref="model_billable_visit"/>
+        <field name="state">code</field>
+        <field name="code">
+# Ambil semua visit yang selesai hari ini tapi belum masuk log billing
+today_str = datetime.date.today().strftime('%Y-%m-%d')
+visits = env['medical.visit'].search([
+    ('state', '=', 'done'),
+    ('date_visit', '&gt;=', today_str),
+    ('date_visit', '&lt;', (datetime.date.today() + datetime.timedelta(days=1)).strftime('%Y-%m-%d'))
+])
+
+# Cek apakah visit ini sudah ada di log billing?
+Billable = env['billable.visit']
+for visit in visits:
+    existing = Billable.search([('visit_id', '=', visit.id)], limit=1)
+    if not existing:
+        # Create Log Baru
+        log = Billable.create({
+            'visit_id': visit.id,
+            'status': 'non_billable' # Default sementara
+        })
+        # Jalankan Kalkulator
+        log.process_billing_logic()
+        </field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="numbercall">-1</field>
+        <field name="nextcall" eval="(DateTime.now() + timedelta(days=1)).strftime('%Y-%m-%d 23:55:00')"/>
+    </record>
+</odoo>

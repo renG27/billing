@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="rule_check_done" model="billing.rule">
+            <field name="name">Wajib Status Selesai (Done)</field>
+            <field name="code">check_done</field>
+        </record>
+        <record id="rule_check_diagnosis" model="billing.rule">
+            <field name="name">Wajib Ada Diagnosa</field>
+            <field name="code">check_diagnosis</field>
+        </record>
+        <record id="rule_check_duplicate" model="billing.rule">
+            <field name="name">Cek Double Visit (Hari Sama)</field>
+            <field name="code">check_duplicate</field>
+        </record>
+        <record id="rule_check_admin" model="billing.rule">
+            <field name="name">Flag jika Diselesaikan Admin</field>
+            <field name="code">check_admin_finish</field>
+        </record>
+    </data>
+</odoo>

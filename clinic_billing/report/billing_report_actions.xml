@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_report_billing_statement" model="ir.actions.report">
+        <field name="name">Cetak Statement</field>
+        <field name="model">billable.visit</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">clinic_billing.report_billing_statement</field>
+        <field name="report_file">clinic_billing.report_billing_statement</field>
+        <field name="binding_model_id" ref="model_billable_visit"/>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>

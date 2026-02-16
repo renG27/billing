@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_billing_statement">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <div class="page">
+                    <h2>Invoice Penggunaan Layanan</h2>
+                    <p>Periode: Bulan Ini</p>
+
+                    <table class="table table-bordered mt-4">
+                        <thead>
+                            <tr>
+                                <th>Tanggal</th>
+                                <th>Pasien</th>
+                                <th>Status</th>
+                                <th class="text-end">Biaya</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-set="total" t-value="0"/>
+                            <t t-foreach="docs" t-as="o">
+                                <tr>
+                                    <td><span t-field="o.date"/></td>
+                                    <td><span t-field="o.patient_id"/></td>
+                                    <td>
+                                        <span t-field="o.status"/>
+                                        <t t-if="o.status != 'billable'">
+                                            <br/><small class="text-danger"><span t-field="o.flag_reason"/></small>
+                                        </t>
+                                    </td>
+                                    <td class="text-end">
+                                        <span t-field="o.bill_amount"/>
+                                        <t t-set="total" t-value="total + o.bill_amount"/>
+                                    </td>
+                                </tr>
+                            </t>
+                            <tr class="fw-bold">
+                                <td colspan="3" class="text-end">TOTAL TAGIHAN</td>
+                                <td class="text-end"><span t-esc="total" t-options='{"widget": "monetary", "display_currency": docs[0].currency_id}'/></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

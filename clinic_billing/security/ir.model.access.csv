@@ -1,0 +1,8 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_billing_plan_manager,billing.plan.manager,model_billing_plan,clinic_billing.group_billing_manager,1,1,1,1
+access_billing_plan_user,billing.plan.user,model_billing_plan,clinic_core.group_clinic_manager,1,0,0,0
+access_billing_tier_manager,billing.tier.manager,model_billing_tier,clinic_billing.group_billing_manager,1,1,1,1
+access_billing_tier_user,billing.tier.user,model_billing_tier,clinic_core.group_clinic_manager,1,0,0,0
+access_billing_rule_manager,billing.rule.manager,model_billing_rule,clinic_billing.group_billing_manager,1,1,1,1
+access_billable_visit_manager,billable.visit.manager,model_billable_visit,clinic_billing.group_billing_manager,1,1,1,1
+access_billable_visit_user,billable.visit.user,model_billable_visit,clinic_core.group_clinic_manager,1,0,0,0
